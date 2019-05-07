@@ -1,0 +1,118 @@
+{
+    "title": "Azure SQL Database Backup",
+    "description": "Provides read functionality for Azure SQL Database Backups",
+    "docsUrl": "",
+    "url": "https://api.apis.guru/v2/specs/azure.com/sql-backups/2014-04-01/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://management.azure.com/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "azure_auth": {
+                "label": "Azure Active Directory OAuth2 Flow",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "auth_uri": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "RecoverableDatabases_ListByServer": {
+            "main": "./lib/actions/RecoverableDatabases_ListByServer.js",
+            "title": "Gets a list of recoverable databases",
+            "description": "Gets a list of recoverable databases",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RecoverableDatabases_ListByServer.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "RecoverableDatabases_Get": {
+            "main": "./lib/actions/RecoverableDatabases_Get.js",
+            "title": "Gets a recoverable database, which is a resource representing a database's geo backup",
+            "description": "Gets a recoverable database, which is a resource representing a database's geo backup",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RecoverableDatabases_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "RestorableDroppedDatabases_ListByServer": {
+            "main": "./lib/actions/RestorableDroppedDatabases_ListByServer.js",
+            "title": "Gets a list of deleted databases that can be restored",
+            "description": "Gets a list of deleted databases that can be restored",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RestorableDroppedDatabases_ListByServer.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "RestorableDroppedDatabases_Get": {
+            "main": "./lib/actions/RestorableDroppedDatabases_Get.js",
+            "title": "Gets a deleted database that can be restored",
+            "description": "Gets a deleted database that can be restored",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/RestorableDroppedDatabases_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}
